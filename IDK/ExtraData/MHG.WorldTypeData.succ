@@ -1,0 +1,6 @@
+DataType: LogicWorld.SharedCode.Data.GridlandsWorldData
+Data:
+    ColorA: 171717
+    ColorB: 2B2B2B
+    BigCellSizeX: 16
+    BigCellSizeZ: 16

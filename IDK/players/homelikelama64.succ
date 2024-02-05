@@ -1,0 +1,31 @@
+PositionData: 
+    FeetPosition:
+        x: 130.2437
+        y: 1.686197
+        z: 17.41804
+    HeadHorizontalRotation: 109.9893
+    HeadVerticalRotation: 31.51437
+    Scale: 1
+    Flying: false
+Hotbar: 
+    SelectedHotbarSlot: 10
+    HotbarItems:
+        - MHG.Key
+        - MHG.Delayer
+        - MHG.Relay
+        - MHG.Buffer_WithOutput
+        - MHG.Buffer
+        - MHG.XorGate
+        - MHG.StandingDisplay
+        - MHG.Button
+        - MHG.Switch
+        - MHG.Inverter
+        - MHG.Peg
+        - MHG.CircuitBoard, MzMzAQAAAAEAAAA=, 0, 0
+        - MHG.DLatch
+        - MHG.AndGate
+        - MHG.Mount
+        - MHG.Socket
+        - MHG.ThroughPeg
+        - MHG.Flag
+        - MHG.ChubbySocket

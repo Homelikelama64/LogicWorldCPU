@@ -1,0 +1,4 @@
+DataType: System.Collections.Generic.List<LogicAPI.Data.ComponentAddress>
+Data:
+    - C-43248
+    - C-43247
