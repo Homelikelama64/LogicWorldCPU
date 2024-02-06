@@ -1,15 +1,16 @@
 PositionData: 
     FeetPosition:
-        x: 129.8048
-        y: 9.874544
-        z: 84.46822
-    HeadHorizontalRotation: 87.8872
-    HeadVerticalRotation: 74.60579
+        x: 172.1197
+        y: 2.763937
+        z: -41.38318
+    HeadHorizontalRotation: 345.2
+    HeadVerticalRotation: 23.80062
     Scale: 1
     Flying: true
 Hotbar: 
-    SelectedHotbarSlot: 10
+    SelectedHotbarSlot: 1
     HotbarItems:
+        - MHG.Chair
         - MHG.Key
         - MHG.Delayer
         - MHG.Relay
