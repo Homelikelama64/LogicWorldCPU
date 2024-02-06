@@ -1,10 +1,10 @@
 PositionData: 
     FeetPosition:
-        x: 157.0754
-        y: 16.92319
-        z: 16.24312
-    HeadHorizontalRotation: 200.3888
-    HeadVerticalRotation: 42.40075
+        x: 129.8048
+        y: 9.874544
+        z: 84.46822
+    HeadHorizontalRotation: 87.8872
+    HeadVerticalRotation: 74.60579
     Scale: 1
     Flying: true
 Hotbar: 
