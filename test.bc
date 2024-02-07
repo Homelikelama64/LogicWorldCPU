@@ -2,6 +2,13 @@
 #const r1 1
 #sub r2 r0 r1
 
+
+const r1 66
+const r2 7
+add r3 r1 r2
+
+halt
+
 #halt
 
 ## Basic Loop
