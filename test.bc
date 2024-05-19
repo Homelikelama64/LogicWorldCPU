@@ -1,26 +1,26 @@
-#const r0 0
-#const r1 1
-#sub r2 r0 r1
+# fibbonaci sequence
 
-
-const r1 66
-const r2 7
-add r3 r1 r2
-
-halt
-
-#halt
-
-## Basic Loop
-#
-#const r0 10
+#const r0 9
 #const r1 1
 #
-#:loop
+#const r2 1
+#const r3 0
+#
+#:jump
 #    # stuff
-#    add r2 r1 r2
+#    add r4 r2 r3
+#    copy r2 r3
+#    copy r3 r4
+#
+#    # end
 #    sub r0 r0 r1
-#    const r6 :loop
+#    const r6 :jump
 #    cond_copy r7 r0 non_zero r6
 #
 #halt
+
+const r0 6123
+const r1 2
+const r2 213
+
+load r3 r1

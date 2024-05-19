@@ -27,7 +27,6 @@ fn main() {
                 let value0 = ram[ip as usize];
                 ip += 1;
                 let value1 = ram[ip as usize];
-                ip += 1;
                 registers[IP] = ip;
 
                 registers[register as usize] = ((value0 as u16) << 8) | value1 as u16;
@@ -36,7 +35,6 @@ fn main() {
                 let dest = ram[ip as usize] & 0b00000111;
                 ip += 1;
                 let second_byte = ram[ip as usize];
-                ip += 1;
                 registers[IP] = ip;
 
                 let a_register = (second_byte & 0b11100000) >> 5;
@@ -48,7 +46,6 @@ fn main() {
                 let dest = ram[ip as usize] & 0b00000111;
                 ip += 1;
                 let second_byte = ram[ip as usize];
-                ip += 1;
                 registers[IP] = ip;
 
                 let a_register = (second_byte & 0b11100000) >> 5;
@@ -60,7 +57,6 @@ fn main() {
                 let dest = ram[ip as usize] & 0b00000111;
                 ip += 1;
                 let second_byte = ram[ip as usize];
-                ip += 1;
                 registers[IP] = ip;
 
                 let a_register = (second_byte & 0b11100000) >> 5;
@@ -73,7 +69,6 @@ fn main() {
                 let dest = ram[ip as usize] & 0b00000111;
                 ip += 1;
                 let second_byte = ram[ip as usize];
-                ip += 1;
                 registers[IP] = ip;
 
                 let a_register = (second_byte & 0b11100000) >> 5;
@@ -86,39 +81,31 @@ fn main() {
                 let dest = ram[ip as usize] & 0b00000111;
                 ip += 1;
                 let second_byte = ram[ip as usize];
-                ip += 1;
                 registers[IP] = ip;
 
-                let src_register = (second_byte & 0b11100000) >> 5;
+                let src_register = (second_byte & 0b00011100) >> 2;
                 registers[dest as usize] = registers[src_register as usize];
             }
             LOAD => {
                 let dest = ram[ip as usize] & 0b00000111;
                 ip += 1;
                 let second_byte = ram[ip as usize];
-                ip += 1;
                 registers[IP] = ip;
 
                 let address_register = (second_byte & 0b11100000) >> 5;
-                let device = second_byte & 0b00011111;
 
                 let address = registers[address_register as usize] as usize;
-                let (first, second) = match device {
-                    RAM => (ram[address], ram[address + 1]),
-                    ROM => (0, 0),
-                    unknown => panic!("tried to access unknown device: {unknown}"),
-                };
+                let first = ram[address];
+                let second = ram[address + 1];
                 registers[dest as usize] = ((first as u16) << 8) | second as u16;
             }
             STORE => {
                 let dest = ram[ip as usize] & 0b00000111;
                 ip += 1;
                 let second_byte = ram[ip as usize];
-                ip += 1;
                 registers[IP] = ip;
 
                 let src = (second_byte & 0b11100000) >> 5;
-                let device = second_byte & 0b00011111;
 
                 let address = registers[dest as usize] as usize;
                 ram[address] = (registers[src as usize] >> 8) as u8;
@@ -128,7 +115,6 @@ fn main() {
                 let dest = ram[ip as usize] & 0b00000111;
                 ip += 1;
                 let second_byte = ram[ip as usize];
-                ip += 1;
                 registers[IP] = ip;
 
                 let condition_register = (second_byte & 0b11100000) >> 5;
@@ -137,6 +123,8 @@ fn main() {
                 let condition = match flag {
                     COND_ZERO_FLAG => registers[condition_register as usize] == 0,
                     COND_NON_ZERO_FLAG => registers[condition_register as usize] != 0,
+                    COND_POSITIVE_FLAG => (registers[condition_register as usize] as i16) >= 0,
+                    COND_NEGATIVE_FLAG => (registers[condition_register as usize] as i16) < 0,
                     unknown => panic!("unknown flag for conditional copy: {unknown}"),
                 };
                 if condition {
@@ -145,6 +133,9 @@ fn main() {
             }
             unknown => panic!("unknown instruction: {unknown:08b}"),
         }
+        ip = registers[IP];
+        ip += 1;
+        registers[IP] = ip;
     }
 
     for (index, register) in registers.into_iter().enumerate() {

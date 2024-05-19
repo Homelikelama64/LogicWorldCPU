@@ -7,15 +7,15 @@ pub const SUB: u8 = 0b00011;
 pub const MULT: u8 = 0b00100;
 pub const DIV: u8 = 0b00101;
 pub const COPY: u8 = 0b00110;
-pub const LOAD: u8 = 0b00111;
-pub const STORE: u8 = 0b01000;
-pub const COND_COPY: u8 = 0b01001;
+pub const COND_COPY: u8 = 0b00111;
+pub const LOAD: u8 = 0b01000;
+pub const STORE: u8 = 0b01001;
 
 pub const COND_ZERO_FLAG: u8 = 0b00;
 pub const COND_NON_ZERO_FLAG: u8 = 0b01;
+pub const COND_POSITIVE_FLAG: u8 = 0b10;
+pub const COND_NEGATIVE_FLAG: u8 = 0b11;
 
-pub const RAM: u8 = 0b0000;
-pub const ROM: u8 = 0b0001;
 
 pub fn validate_register<'a>(
     tokens: &mut impl Iterator<Item = &'a str>,

@@ -1,6 +1,7 @@
 use rdev::{listen, Event, EventType, Key};
 use std::{
     collections::HashSet,
+    sync::{atomic::AtomicBool, Arc},
     thread::{sleep, spawn},
     time::Duration,
 };
@@ -54,19 +55,18 @@ fn release_all_keys(keys_down: &mut HashSet<u16>) {
 }
 
 fn main() {
-    spawn(move || {
-        loop {
-            if let Err(error) = listen(callback) {
-                println!("Error: {:?}", error)
-            }
-        }
-
-        fn callback(event: Event) {
-            match event.event_type {
+    let kill = Arc::new(AtomicBool::new(false));
+    spawn({
+        let kill = kill.clone();
+        move || loop {
+            let kill = kill.clone();
+            if let Err(error) = listen(move |event: Event| match event.event_type {
                 EventType::KeyPress(Key::BackSlash) => {
-                    std::process::exit(0);
+                    kill.store(true, std::sync::atomic::Ordering::Relaxed);
                 }
                 _ => {}
+            }) {
+                println!("Error: {:?}", error)
             }
         }
     });
@@ -87,10 +87,13 @@ fn main() {
 
     let mut keys_down: HashSet<u16> = HashSet::new();
 
-    sleep(Duration::from_secs(4));
+    sleep(Duration::from_secs(1));
     for (address, byte) in ram.into_iter().enumerate() {
         release_key(&mut keys_down, VK_V);
         release_all_keys(&mut keys_down);
+        if kill.load(std::sync::atomic::Ordering::Relaxed) {
+            break;
+        }
         sleep(Duration::from_millis(17));
 
         let address: u16 = address.try_into().unwrap();
@@ -111,10 +114,10 @@ fn main() {
             }
         }
 
-        sleep(Duration::from_millis(17));
+        sleep(Duration::from_millis(100));
 
         press_key(&mut keys_down, VK_V);
 
-        sleep(Duration::from_millis(17));
+        sleep(Duration::from_millis(100));
     }
 }

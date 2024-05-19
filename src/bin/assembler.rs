@@ -114,7 +114,7 @@ fn main() {
                 ram[ip] = COPY << 3 | dest;
                 ip += 1;
                 let src = validate_register(&mut tokens, "copy");
-                ram[ip] = src << 5;
+                ram[ip] = src << 2;
                 ip += 1;
 
                 if let Some(trailing) = tokens.next() {
@@ -156,6 +156,8 @@ fn main() {
                 {
                     "zero" => COND_ZERO_FLAG,
                     "non_zero" => COND_NON_ZERO_FLAG,
+                    "positive" => COND_POSITIVE_FLAG,
+                    "negative" => COND_NEGATIVE_FLAG,
                     unknown => panic!("Unkown cond_copy type flag {unknown}"),
                 };
                 let src = validate_register(&mut tokens, "cond_copy");
@@ -164,7 +166,7 @@ fn main() {
             }
             label if label.starts_with(':') => {
                 let name = label.strip_prefix(':').unwrap();
-                if labels.insert(name.to_string(), ip as _).is_some() {
+                if labels.insert(name.to_string(), (ip - 1) as u16 ).is_some() {
                     panic!("Redefintion of '{name}' label");
                 }
                 if let Some(to_be_found_labels) = to_be_found_labels.remove(name) {
