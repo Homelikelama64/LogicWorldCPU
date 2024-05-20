@@ -19,8 +19,8 @@
 #
 #halt
 
-const r0 6123
+const r0 6000
 const r1 2
-const r2 213
+const r2 50
 
-load r3 r1
+store r2 r0
